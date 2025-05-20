@@ -1,19 +1,3 @@
-function Import-Games {
-    <#
-    
-    #>
-    [CmdletBinding()]
-    param (
-        [string]$csv
-    )
-    begin {
-        $gameData = Import-Csv $csv
-    }
-    process {
-        $gameData
-    }
-}
-
 function Format-Url {
     <#
         .SYNOPSIS
@@ -34,6 +18,35 @@ function Format-Url {
     }
 }
 
-$csv = '.\data.csv'
-$games = Import-Games -csv $csv
-$games
+function Format-Message {
+    <#
+    
+    #>
+    param (
+        [object]$SelectedGame
+    )
+    begin {
+        [object]$ComparedGame = Get-RandomGame
+        [string]$videoURL = Format-Url -ytid $SelectedGame.ytid -seconds $SelectedGame.seconds
+    }
+    process {
+        [string]$message = "Is $($SelectedGame.game) better than $($ComparedGame.game)? Let's find out! `n`n$videoURL"
+        $message
+    }
+}
+
+function Get-RandomGame {
+    <#
+    
+    #>
+    $csv = '.\data.csv'
+    $games = Import-Csv $csv
+
+    $randomGame = Get-Random -InputObject $Games
+    $randomGame
+}
+
+$game = Get-RandomGame
+Format-Message -SelectedGame $game
+$url = Format-Url -ytid $game.ytid -seconds $game.seconds
+Start-Process $url
