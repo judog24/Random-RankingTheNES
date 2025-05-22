@@ -1,0 +1,15 @@
+name: Mastodon Bot
+on: [workflow_dispatch]
+
+jobs:
+    build:
+      name: Run Script
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - name: Post
+          run: .\Invoke-MastodonBot.ps1
+          shell: pwsh
+          env:
+            MastodonInstance: ${{ secrets.MASTODON_INSTANCE }}
+            AccessToken: ${{ secrets.ACCESS_TOKEN }}
