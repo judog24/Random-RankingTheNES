@@ -1,3 +1,22 @@
+function Receive-GamesCSV {
+    <#
+        .SYNOPSIS
+            Downloads the latest game ranking data.
+    #>
+    [CmdletBinding()]
+    param (
+        [string]$ListURL
+    )
+    process {
+        try {
+            Invoke-WebRequest -Uri $ListURL -OutFile "data.csv" -UseBasicParsing
+        }
+        catch {
+            "Unable to download CSV"
+        }
+    }
+}
+
 function Format-Url {
     <#
         .SYNOPSIS
@@ -20,8 +39,10 @@ function Format-Url {
 
 function Format-Message {
     <#
-    
+        .SYNOPSIS
+            Constructs the message that will be displayed.
     #>
+    [OutputType([string])]
     param (
         [object]$SelectedGame
     )
@@ -37,8 +58,9 @@ function Format-Message {
 
 function Get-RandomGame {
     <#
-    
+        .SYNOPSIS
     #>
+    [OutputType([object])]
     $csv = '.\data.csv'
     $games = Import-Csv $csv
 
