@@ -20,7 +20,7 @@ I am also utilizing workflows from [this repo](https://github.com/adamdriscoll/p
 
 Running `Invoke-RandomGame.ps1` will automatically open a browser to the randomly selected timestamp to a game from the CSV.
 
-```
+```PowerShell
 PS C:\Users\judog\Documents\git\Random-RankingTheNES> .\Invoke-RandomGame.ps1 
 
 Is WWF Wrestlemania Challenge better than Super Pitfall? Let's find out! 
